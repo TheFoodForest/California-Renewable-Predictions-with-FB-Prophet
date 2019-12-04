@@ -59,11 +59,11 @@ def home():
     text-align: center;
     list-style-position: inside;
         }
-/*
+
         ol.center_text li
     {
     text-align: left;
-    margin-left: 45%;
+    margin-left: 30%;
         } 
 
         ul.center_text li
@@ -71,7 +71,7 @@ def home():
     text-align: left;
     
         } 
-*/
+
     </style>
     <html>
     <head>
@@ -91,7 +91,7 @@ def home():
             <li>"unit" parameter is optional, default is "MWh" can pass "GWh"</li>
         </ul>
         <li>localhost:5000/api/renewable_prod/date/range/YYYY-mm-dd(START DATE)/YYYY-mm-dd(END DATE)/unit</li>
-        <ul class='center_list>
+        <ul class="center_text">
             <li>Returns Hourly Production between two dates provided</li>
             <li>"unit" parameter is optional with same options as above</li>
         </ul>
