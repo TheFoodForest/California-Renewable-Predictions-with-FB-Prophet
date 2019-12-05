@@ -9,10 +9,6 @@ app = Flask(__name__, static_folder=r"C:\Users\graha\Desktop\Data Science Practi
 engine = create_engine('postgresql://{}:{}@localhost:5432/California_Renewables'.format(username, password))
 
 conn = engine.connect()
-##sql = 'select a."ds", a.yhat as "Predicted Value", b."RENEW TOTAL" as "True Production", (a.yhat - b."RENEW TOTAL") as "Error"From "RenewablePredictions" aleft join "RenewableProduction" bon a."ds" = b."TIMESTAMP"order by a."ds"'
-#responce_data = pd.read_sql(sql=sql,con=conn)
-
-
 
 @app.route('/')
 def home():
@@ -113,27 +109,78 @@ def get_date_data(date_str,unit):
                      'summary':{}}
     sql = '''select a."ds", a.yhat as "Predicted Value", b."RENEW TOTAL" as "True Production", \
             (a.yhat - b."RENEW TOTAL") as "Error" From "RenewablePredictions" a left join "RenewableProduction" b \
-            on a."ds" = b."TIMESTAMP" where to_char(a."ds", 'YYYY-mm-dd') = '{}'\
+            on a."ds" = b."TIMESTAMP" where to_char(a."ds", 'YYYY-mm-dd') = '{}' \
             order by a."ds"'''.format(date_str)
     responce_data = pd.read_sql(sql=sql,con=conn)
+    responce_data['ds'] = pd.to_datetime(responce_data['ds'])
+    responce_data['month'] = responce_data['ds'].dt.month
+    responce_data['day'] = responce_data['ds'].dt.day
+    responce_data['year'] = responce_data['ds'].dt.year
+    responce_data['hour'] = responce_data['ds'].dt.hour
+    responce_data['PE'] = np.absolute(responce_data['True Production'] - responce_data['Predicted Value'])/responce_data['True Production']
+    responce_data = responce_data[['ds','year','month','day','hour','Predicted Value','True Production','Error','PE']]
     if unit == 'MWh':
         div = 1
     elif unit == 'GWh':
         div = 1000
     
     for index, row in responce_data.iterrows():
-        pred = row[1]//div
-        true = row[2]//div
+        pred = row[5]//div
+        true = row[6]//div
         responce_dict['production']['{}'.format(row[0])] = {'Predicted Production':pred,'True Production':true}
 
     total_prod = round(responce_data['True Production'].sum()/div,2)
     total_pred = round(responce_data['Predicted Value'].sum()/div,2)
     err = total_pred - total_prod
     p_err = round((err/total_prod)*100,2)
-    responce_data['PE'] = np.absolute(responce_data['True Production'] - responce_data['Predicted Value'])/responce_data['True Production']
     mape = round((np.sum(responce_data['PE'])/len(responce_data))*100,2)
     responce_dict['summary'] = {'Total True Production':total_prod, 'Total Predicted Production':total_pred, 'Percent Error':p_err,'Mean Absolute Percent Error':mape}
     return jsonify(responce_dict)
+
+#Trying to figure out how to format the responce for the date range in a format that wold be easy to 
+#work with.  Not sure of the best format for now
+#Following format only returns the last hour of last day in range of dates
+#totals seem to work properly 
+@app.route('/api/renewable_prod/date/range/<start_date>/<end_date>',defaults={'unit':'MWh'})
+@app.route('/api/renewable_prod/date/range/<start_date>/<end_date>/<unit>')
+def get_range_data(start_date, end_date, unit):
+    responce_dict = {'production':{'year':{'month':{'day':{'hour':{}}}}},
+                     'summary':{}}
+    sql = '''select a."ds", a.yhat as "Predicted Value", b."RENEW TOTAL" as "True Production", \
+            (a.yhat - b."RENEW TOTAL") as "Error" From "RenewablePredictions" a left join "RenewableProduction" b \
+            on a."ds" = b."TIMESTAMP" where to_char(a."ds", 'YYYY-mm-dd') >= '{}' and to_char(a."ds", 'YYYY-mm-dd') <= '{}'\
+            order by a."ds"'''.format(start_date,end_date)
+    responce_data = pd.read_sql(sql=sql,con=conn)
+    responce_data['ds'] = pd.to_datetime(responce_data['ds'])
+    responce_data['month'] = responce_data['ds'].dt.month
+    responce_data['day'] = responce_data['ds'].dt.day
+    responce_data['year'] = responce_data['ds'].dt.year
+    responce_data['hour'] = responce_data['ds'].dt.hour
+    responce_data['PE'] = np.absolute(responce_data['True Production'] - responce_data['Predicted Value'])/responce_data['True Production']
+    responce_data = responce_data[['ds','year','month','day','hour','Predicted Value','True Production','Error','PE']]
+    
+    if unit == 'MWh':
+        div = 1
+    elif unit == 'GWh':
+        div = 1000
+    
+    for index, row in responce_data.iterrows():
+        pred = row[5]//div
+        true = row[6]//div
+        responce_dict['production'] = \
+            {'{}'.format(row[1]) : {'{}'.format(row[2]) : {'{}'.format(row[3]) : {'{}'.format(row[4]) : {'Predicted Production':pred,
+            'True Production':true}}}}}
+
+
+    total_prod = round(responce_data['True Production'].sum()/div,2)
+    total_pred = round(responce_data['Predicted Value'].sum()/div,2)
+    err = total_pred - total_prod
+    p_err = round((err/total_prod)*100,2)
+    #responce_data['PE'] = np.absolute(responce_data['True Production'] - responce_data['Predicted Value'])/responce_data['True Production']
+    mape = round((np.sum(responce_data['PE'])/len(responce_data))*100,2)
+    responce_dict['summary'] = {'Total True Production':total_prod, 'Total Predicted Production':total_pred, 'Percent Error':p_err,'Mean Absolute Percent Error':mape}
+    return jsonify(responce_dict)
+
 
 
 
