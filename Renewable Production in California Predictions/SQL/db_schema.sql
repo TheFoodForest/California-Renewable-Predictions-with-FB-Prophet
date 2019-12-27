@@ -6,6 +6,7 @@ CREATE SCHEMA "Demand";
 
 CREATE SCHEMA "Comparison";
 
+
 -- Creating table for hourly renewable production data in Production schema 
 --then selecting from it after writing from pandas
 CREATE TABLE "Production".hourlyrenewable(
