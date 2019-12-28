@@ -21,7 +21,7 @@ Contributors
 -
 -[Scott Clark](https://github.com/scottinsactown)
   - Contributed to ETL process and database set-up 
-  - Created some of the visualizations in analysis 
+  - Created some of the visualizations in renewable production and energy demand analysis 
 
 PROJECT STILL IN DEVELOPMENT
 -
