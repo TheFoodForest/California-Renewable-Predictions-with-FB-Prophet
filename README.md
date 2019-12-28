@@ -19,7 +19,7 @@ California-Renewable-Predictions-with-FB-Prophet:
 
 Contributors
 -
--Scott Clark
+-[Scott Clark](https://github.com/scottinsactown)
   - Contributed to ETL process and database set-up 
   - Created some of the visualizations in analysis 
 
