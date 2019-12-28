@@ -1,5 +1,5 @@
 # California Renewable Predictions with FB Prophet
--
+
 Contents
 -
 California-Renewable-Predictions-with-FB-Prophet:
