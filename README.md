@@ -4,14 +4,14 @@ Contents
 -
 California-Renewable-Predictions-with-FB-Prophet:
 -ETL:
-  - Two jupyter notebooks that pull data from api and scrape public records and write to local Postgres database
+  - Jupyter notebook that sets up SQL DB, then scrapes renewable production data from CAISO and pulls energy demand data from EIA API, and loads into database 
 -Predictions and Analysis:
   -Jupyter notebook for analyzing renewable production data in California 
   -Jupyter notebook for analyzing total energy demand in California
   -Jupyter notebook using FB Prophet to predict renewable power production and write results to DB
   -Jupyter notebook for predicting energy demand
 -SQL:
-  - SQL files that build the structure of the DB then uses the ETL data to make new comparison tables 
+  - SQL files for refernce, all sql is also in ETL jupyter notebook  
 -Flask-api-app
   -local app that returns data from built database 
   -home page html is in "templates" folder 
