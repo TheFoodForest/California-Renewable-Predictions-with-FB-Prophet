@@ -4,7 +4,7 @@ Contents
 -
 California-Renewable-Predictions-with-FB-Prophet:
 -ETL:
-  -Jupyter notebook that sets up SQL DB, then scrapes renewable production data from CAISO and pulls energy demand data from EIA API, and loads into database 
+  -Jupyter notebook that sets up SQL DB, then scrapes renewable production data from CAISO and pulls energy demand data from EIA API, and loads into database
 -Predictions and Analysis:
   -Jupyter notebook for analyzing renewable production data in California 
   -Jupyter notebook for analyzing total energy demand in California
