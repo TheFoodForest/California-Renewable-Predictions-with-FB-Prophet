@@ -5,7 +5,7 @@ California ISO Reports - [http://www.caiso.com/market/Pages/ReportsBulletins/Dai
 
 US Energy Information Administration API - [https://www.eia.gov/opendata/register.php](https://www.eia.gov/opendata/register.php)
 
-Everything here only runs locally, project built out of interest in topic and for practice with data analytics. 
+Everything here only runs locally, project built out of interest in topic and for practice with data analytics. The reports use raw data and are not intended to be used as the basis for operational or financial decisions.
 
 Contents
 -
