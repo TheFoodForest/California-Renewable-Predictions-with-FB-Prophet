@@ -31,7 +31,7 @@ Contributors
   - Contributed to ETL process and database set-up 
   - Created some of the visualizations in renewable production and energy demand analysis 
 
-Prject Still in Development 
+Project Still in Development 
 -
 Future Plans:
 - Continue to work on improving Renewable Prediction Accuracy
