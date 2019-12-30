@@ -1,5 +1,11 @@
 # California Renewable Predictions with FB Prophet
+Data
+-
+California ISO Reports - [http://www.caiso.com/market/Pages/ReportsBulletins/DailyRenewablesWatch.aspx](http://www.caiso.com/market/Pages/ReportsBulletins/DailyRenewablesWatch.aspx)
 
+US Energy Information Administration API - [https://www.eia.gov/opendata/register.php](https://www.eia.gov/opendata/register.php)
+
+Everything here only runs locally, project built out of interest in topic and for practice with data analytics.  
 Contents
 -
 California-Renewable-Predictions-with-FB-Prophet:
@@ -13,6 +19,7 @@ California-Renewable-Predictions-with-FB-Prophet:
 - SQL:
   - SQL files for refernce, all sql is also in ETL jupyter notebook  
 - Flask-api-app
+  - APP ONLY LOCAL, NOT REDISTRUBUTING DATA 
   - local app that returns data from built database 
   - home page html is in "templates" folder 
 
@@ -26,7 +33,7 @@ Contributors
 PROJECT STILL IN DEVELOPMENT
 -
 Future Plans:
-- Continue to scrape/ request most current data and work on improving Renewable Prediction Accuracy
+- Continue to work on improving Renewable Prediction Accuracy
 - Build Demand Prediction Model 
 - Improve API (more routes, more pages, better home page, ...) 
 
