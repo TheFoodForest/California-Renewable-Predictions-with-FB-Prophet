@@ -7,4 +7,4 @@ __pycache__
 .vscode
 
 
-Renewable_App\env\local.env
+Renewable_App/env/local.env
