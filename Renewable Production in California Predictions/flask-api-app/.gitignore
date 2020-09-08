@@ -5,3 +5,6 @@ config.py
 __pycache__
 
 .vscode
+
+
+Renewable_App\env\local.env
