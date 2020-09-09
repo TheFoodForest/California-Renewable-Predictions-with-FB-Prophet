@@ -4,3 +4,4 @@ from flask import Flask
 app = Flask(__name__, template_folder='templates')
 
 import Renewable_App.views
+import Renewable_App.api

@@ -11,7 +11,6 @@
  }
 
  /* for slider selection on home plot */
-
  .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -41,3 +40,23 @@
     background: #4CAF50;
     cursor: pointer;
   }
+
+
+
+  /* footer */
+  #footer-txt {
+    color: rgb(82, 82, 82);
+}
+
+#footer-nav {
+    background-color: rgb(146, 145, 145);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#spacer {
+    padding-top: 1%;
+    padding-bottom: 1%;
+}

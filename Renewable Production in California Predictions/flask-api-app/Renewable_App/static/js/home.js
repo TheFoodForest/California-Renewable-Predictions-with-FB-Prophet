@@ -120,7 +120,7 @@ function optionChanged(value) {
            
 
         }
-        console.log(charOptions);// chart built from responce 
+        // console.log(charOptions);// chart built from responce 
     Highcharts.chart('container', charOptions);
 
     });
@@ -131,7 +131,7 @@ function optionChanged(value) {
 }
 
 
-
+// just set the chart to show the middle date when loading the page 
 optionChanged(dates[Math.ceil(maxIndex / 2)])
 
 slider.onchange = function () {

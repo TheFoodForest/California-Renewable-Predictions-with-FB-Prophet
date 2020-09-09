@@ -41,32 +41,23 @@
             </div>
           </nav>
     </div>
-<!-- </div>
+</div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark top-nav">
-        <a class="navbar-brand" href="/">Renewable Energy</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{{ url_for('home') }}">Home<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="#">Predictions</a>
-            <a class="nav-item nav-link" href="#">Analysis</a>
-            <a class="nav-item nav-link" href="{{ url_for('api') }}">API Documentation</a>
-          </div>
-        </div>
-      </nav> -->
-
+<!-- where block content ends up-->
     <div class="container-fluid">
+      <div class="row" id='spacer'></div>
+    
         {% block content %}{% endblock %}
-        <div class="row">
+
+        <div class="row" id='spacer'></div>
+        <div class="row" id="footer">
           <div class="col-lg-12"  style="border-top: 5px  rgb(3, 156, 156);">
                   <nav id="footer-nav" class="navbar navbar-light d-flex justify-content-center">
                           <div class="d-flex p-2 bd-highlight" id="footer-txt">Contact Graham -<a href = "mailto: grahamelpenrose@gmail.com">grahamelpenrose@gmail.com </a> </div>
                         </nav>
           </div>
       </div>
+      
     </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
