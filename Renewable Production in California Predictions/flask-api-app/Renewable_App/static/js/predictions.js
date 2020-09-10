@@ -1,3 +1,11 @@
+//  WANT TO MAKE A CHANGE TO GET ALL DATA FOR THIS PAGE FOR 2019 AT ONCE
+// THEN CAN CHART IT QUICKLY WITHOUT HAVING TO MAKE API CALLS ON EACH INPUT
+// SLIDER MAKES INPUT FOR EVERY VLAUE DRAGGED ACROSS
+
+
+
+
+
 const getDateArray = function(start, end) {
     var arr = {};
     var format = d3.timeFormat('%Y-%m-%d')
@@ -15,8 +23,8 @@ const getDateArray = function(start, end) {
 var predUrl = '/api/predictions/date/range/'
 var trueUrl = '/api/renewable_prod/date/range/'
 
-var sliderMin = document.getElementById('myRange1');
-var sliderMax = document.getElementById('myRange2');
+var sliderMin = document.getElementById('myRangeMin');
+var sliderMax = document.getElementById('myRangeMax');
 
 var dates = getDateArray(new Date('2019-01-01'), new Date('2019-09-15'))
 // console.log(dates);
@@ -25,8 +33,8 @@ var maxIndex = Object.keys(dates).length - 1
 var midIndex = Math.ceil(maxIndex / 2)
 
 // make it so the sliders can't overlap eachother - not the best for the user - but a working method
-d3.select('#myRange1').attr('min', minIndex).attr('max', maxIndex - 1).attr('value', midIndex - 1);
-d3.select('#myRange2').attr('min', minIndex + 1).attr('max', maxIndex).attr('value', midIndex + 1);
+d3.select('#myRangeMin').attr('min', minIndex).attr('max', maxIndex - 1).attr('value', midIndex - 1);
+d3.select('#myRangeMax').attr('min', minIndex + 1).attr('max', maxIndex).attr('value', midIndex + 1);
 
 d3.select('#startDate').text(dates[midIndex - 1]);
 d3.select('#endDate').text(dates[midIndex + 1]);
@@ -140,10 +148,10 @@ function createCompare(starDate, endDate) {
 }
 
 // when min slider changes - aducst the graphs
-sliderMin.onchange = function () {
+sliderMin.oninput = function () {
     minSlider(this.value);
 }
-sliderMax.onchange = function () {
+sliderMax.oninput = function () {
     maxSlider(this.value);
 }
 
@@ -153,34 +161,27 @@ sliderMax.onchange = function () {
 function minSlider(value) {
     console.log('MINSLIDER FUNCTION');
     let indexMin = parseInt(value);
-    d3.select('#myRange1').attr('value',indexMin);
-    // console.log(indexMin);
-    let indexMax = parseInt(d3.select('#myRange2').attr('value'));
-    // console.log(indexMax);
+    d3.select('#myRangeMin').attr('value',indexMin);
+    let indexMax = parseInt(d3.select('#myRangeMax').attr('value'));
     // make it so the sliders can't overlap eachother - not the best for the user - but a working method
     if (indexMin > indexMax) {
         indexMax = indexMin + 1;
-        d3.select('#myRange2').attr('value', indexMax);
-        // console.log('CHANGE1')
-    // console.log(indexMin);
-    // console.log(indexMax);
+        d3.select('#myRangeMax').property('value', indexMax).attr('value',indexMax);
     }
     d3.select('#startDate').text(dates[indexMin]);
     d3.select('#endDate').text(dates[indexMax]);
-    createCompare(dates[indexMin], dates[indexMax]);
 }
-
 function maxSlider(value) {
     console.log('MAXSLIDER FUNCTION');
     let indexMax = parseInt(value);
-    d3.select('#myRange2').attr('value',indexMax);
-    let indexMin = parseInt(d3.select('#myRange1').attr('value'));
+    d3.select('#myRangeMax').attr('value',indexMax);
+    let indexMin = parseInt(d3.select('#myRangeMin').attr('value')); // if I don't use D3 and just use sliderMax.value - it has strange behavior 
     // make it so the sliders can't overlap eachother - not the best for the user - but a working method
     if (indexMax < indexMin) {
         indexMin = indexMax - 1;
-        d3.select('#myRange1').attr('value', indexMin);
+        d3.select('#myRangeMin').property('value', indexMin).attr('value',indexMin);
     };
     d3.select('#startDate').text(dates[indexMin]);
     d3.select('#endDate').text(dates[indexMax]);
-    createCompare(dates[indexMin], dates[indexMax]);
 }
+
