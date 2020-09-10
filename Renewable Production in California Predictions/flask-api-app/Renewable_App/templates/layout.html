@@ -32,7 +32,7 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Predictions</a>
+                  <a class="nav-link" href="{{ url_for('predictions') }}">Predictions</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url_for('api') }}">API</a>
@@ -43,10 +43,10 @@
     </div>
 </div>
 
-<!-- where block content ends up-->
+
     <div class="container-fluid">
       <div class="row" id='spacer'></div>
-    
+    <!--Where other templates get rendered-->
         {% block content %}{% endblock %}
 
         <div class="row" id='spacer'></div>

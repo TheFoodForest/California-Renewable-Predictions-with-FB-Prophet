@@ -1,8 +1,6 @@
-var test = 'hello'
-
 var url = '/api/renewable_prod/date/'
 
-var getDateArray = function(start, end) {
+const getDateArray = function(start, end) {
     var arr = {};
     var format = d3.timeFormat('%Y-%m-%d')
     var dt = new Date(start);
@@ -15,7 +13,7 @@ var getDateArray = function(start, end) {
     return arr;
 }
 
-dates = getDateArray(new Date('2018-01-01'), new Date('2019-09-15'))
+var dates = getDateArray(new Date('2018-01-01'), new Date('2019-09-15'))
 
 // get the values to fill in the slider with
 var minIndex = d3.min(Object.keys(dates))
@@ -33,9 +31,9 @@ function optionChanged(value) {
     fetch(url + value).then( response => {
         return response.json();
     }).then(data => {
-        console.log(data);
-        console.log(data.Hour);
-        console.log(data['Hour'].length);
+        // console.log(data);
+        // console.log(data.Hour);
+        // console.log(data['Hour'].length);
 
         var hour = data.Hour.reverse();
    

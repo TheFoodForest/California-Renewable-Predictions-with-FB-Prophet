@@ -96,3 +96,29 @@ def get_range_data_demand(start_date, end_date, unit):
         except:
             responce['{}'.format(datee)] = ["No production data for this date"]
     return jsonify(responce)
+
+
+
+
+@app.route('/api/predictions/date/range/<start_date>/<end_date>',defaults={'unit':'MWh'})
+@app.route('/api/predictions/date/range/<start_date>/<end_date>/<unit>')
+def get_range_data_predictions(start_date, end_date, unit):
+
+    sql = '''
+    SELECT * from "Predictions".hourlyrenewablepredictions r
+    WHERE r."date"::DATE >= '{}'::DATE and r."date"::DATE <= '{}'::DATE
+    '''.format(str(start_date), str(end_date))
+   
+    with engine.connect() as c:
+        rs = c.execute(sql)
+        res = rs.fetchall()
+
+    if len(res) < 1:
+        return jsonify({"Message": "No predictions made for this date"})
+
+    responce = {str(r[0]):
+                {"predTotal":r[2],
+                "predSolar":r[3]}
+                for r in res}
+                
+    return jsonify(responce)

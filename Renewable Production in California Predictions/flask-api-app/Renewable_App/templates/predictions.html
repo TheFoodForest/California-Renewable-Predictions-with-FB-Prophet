@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+
+{% block content %}  
+  <div class="row">
+    
+        <div class='col-3'>
+            <div class="jumbotron">
+              <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vero earum nam ratione hic dignissimos, illo ipsam dolor, eius numquam provident odio voluptatem vitae, dolorem repellat veniam voluptate explicabo nulla.</p>
+        
+            </div>
+           </div>
+
+        <div class="col-8">
+        <div class="jumbotron">
+          <h1 class="display-4">Some Header</h1>
+          <p class="lead">Here is some info around what this website is about</p>
+          <hr class="my-4">
+          <p>Use the slider to look at the predictions over time</p>
+          <div class="row">
+            <div class="col-6" style="padding-left: 1%; padding-right: 1%;">
+              <h4 class="lead">Start Date</h4><h1 id='startDate'></h1>
+                <div class="slidecontainerMin">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
+                </div>
+            </div>
+            <div class="col-6" style="padding-left: 1%; padding-right: 1%;">
+              <h4 class="lead">End Date</h4><h1 id='endDate'></h1>
+                <div class="slidecontaineMax">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange2">
+                </div>
+            </div>
+        </div>
+          <div id='container' ></div>
+          <figure class="highcharts-figure">
+      
+          </figure>
+        </div>
+   </div>
+  
+  </div>
+  
+  
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+
+
+  <script src="https://d3js.org/d3-time.v2.min.js"></script>
+  <script src="https://d3js.org/d3-time-format.v3.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  <script src="{{ url_for('static',filename='js/predictions.js') }}"></script>
+  {% endblock %}
