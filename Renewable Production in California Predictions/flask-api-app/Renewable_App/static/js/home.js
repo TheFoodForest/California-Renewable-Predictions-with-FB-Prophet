@@ -1,5 +1,5 @@
 var url = '/api/renewable_prod/date/'
-
+var total_url = '/api/total_production/'
 const getDateArray = function(start, end) {
     var arr = {};
     var format = d3.timeFormat('%Y-%m-%d')
@@ -125,6 +125,94 @@ function optionChanged(value) {
 
 
 
+    fetch(total_url + value).then( response => {
+        return response.json();
+    }).then(data => {
+
+        var nuclear = 0
+        var hydro = 0
+        var renew = 0
+        var thermal = 0
+
+        for (var i = 0; i < Object.keys(data).length; i++){
+            nuclear += data[Object.keys(data)[i]].nuclear;
+            hydro += data[Object.keys(data)[i]].hydro;
+            renew += data[Object.keys(data)[i]].renew;
+            thermal += data[Object.keys(data)[i]].thermal;
+        }
+        var barOptions = {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Production By Source'
+            },
+            xAxis: {
+                categories: ['']
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'MWh'
+                },
+                stackLabels: {
+                    enabled: true,
+                    style: {
+                        fontWeight: 'bold',
+                        color: ( // theme
+                            Highcharts.defaultOptions.title.style &&
+                            Highcharts.defaultOptions.title.style.color
+                        ) || 'gray'
+                    }
+                }
+            },
+            legend: {
+                align: 'right',
+                x: -30,
+                verticalAlign: 'top',
+                y: 25,
+                floating: true,
+                backgroundColor:
+                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                shadow: false
+            },
+            tooltip: {
+                headerFormat: '<b>{point.x}</b><br/>',
+                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+            },
+            series: [{
+                name: 'Renewables',
+                data: [renew]
+            }, {
+                name: 'Nuclear',
+                data: [nuclear]
+            }, {
+                name: 'Thermal',
+                data: [thermal]
+            },
+        {
+            name: 'Hydro',
+            data: [hydro]
+        }]
+        };
+
+        
+
+        Highcharts.chart('container-bar', barOptions)
+    });
+
+
+
     
 }
 
@@ -136,3 +224,6 @@ slider.onchange = function () {
     index = this.value;
     optionChanged(dates[index]);
 }
+
+
+

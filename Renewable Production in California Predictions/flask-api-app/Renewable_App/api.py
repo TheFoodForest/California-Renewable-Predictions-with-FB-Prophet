@@ -100,6 +100,8 @@ def get_range_data_demand(start_date, end_date, unit):
 
 
 
+
+#route to get range of predictions
 @app.route('/api/predictions/date/range/<start_date>/<end_date>',defaults={'unit':'MWh'})
 @app.route('/api/predictions/date/range/<start_date>/<end_date>/<unit>')
 def get_range_data_predictions(start_date, end_date, unit):
@@ -122,3 +124,59 @@ def get_range_data_predictions(start_date, end_date, unit):
                 for r in res}
                 
     return jsonify(responce)
+
+
+#route for just raw production data
+@app.route('/api/renewable_production/date/range/<start_date>/<end_date>',defaults={'unit':'MWh'})
+@app.route('/api/renewable_production/date/range/<start_date>/<end_date>/<unit>')
+def get_range_production_data(start_date, end_date, unit):
+    sql = '''
+    SELECT timestamp, "TOTAL", "SOLAR TOTAL" 
+    FROM "Production".hourlyrenewable 
+    WHERE date::DATE <= '{}'::DATE
+    AND date::DATE >= '{}'::DATE
+    '''.format(str(end_date), str(start_date))
+
+    with engine.connect() as c:
+        rs = c.execute(sql)
+        res = rs.fetchall()
+    
+    if len(res) < 1:
+        return jsonify({{"Message": "No production data for this date range"}})
+    
+    response = {str(r[0]): {
+        'total':r[1],
+        'solar':r[2]
+    } for r in res}
+
+    return jsonify(response)
+
+
+@app.route('/api/total_production/<date>')
+def total_production(date):
+    sql = '''
+    SELECT * from "Production".hourlyTotal
+    WHERE date::DATE = '{}'::DATE
+    '''.format(str(date))
+
+    with engine.connect() as c:
+        rs = c.execute(sql)
+        res = rs.fetchall()
+    
+    if len(res) < 1:
+        return jsonify({{"Message": "No production data for this date range"}})
+    
+    response = {str(r[0]): {
+        'renew':r[3],
+        'nuclear':r[4],
+        'thermal':r[5],
+        'hydro':r[6]
+    } for r in res}
+
+    return jsonify(response)
+
+
+
+
+
+
