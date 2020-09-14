@@ -333,8 +333,8 @@ function createCompareSolar(startDate, endDate) {
     let filteredPred = data['preds']
         .then(data => {
             return Object.keys(data)
-            .filter(filterDates).reduce((obj, key) => {
-                obj[key] = data[key];
+            .filter(filterDates).reduce((obj, key) => { // this reduces down the dates to dates between start and end Date - defined above
+                obj[key] = data[key];                   // then have to reduce the object down to the keys that have be maked to true
                 return obj;
               }, {})
             }
